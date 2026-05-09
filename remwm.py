@@ -13,7 +13,7 @@ from concurrent.futures import ThreadPoolExecutor
 subprocess.run('pip install flash-attn --no-build-isolation', env={'FLASH_ATTENTION_SKIP_CUDA_BUILD': "TRUE"}, shell=True)
 
 class WatermarkRemover:
-    def __init__(self, model_id='microsoft/Florence-2-large'):
+    def __init__(self, model_id = "./models/Florence-2-large"):
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         
         # Initialize Florence model
@@ -64,7 +64,7 @@ class WatermarkRemover:
         image_cv = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
         
         # Run Florence to get mask
-        text_input = 'watermark'  # Teks untuk Florence agar mengenali watermark
+        text_input = 'watermark, signature'  # Teks untuk Florence agar mengenali watermark
         task_prompt = '<REGION_TO_SEGMENTATION>'
         inputs = self.florence_processor(text=task_prompt + text_input, images=image, return_tensors="pt").to(self.device)
         generated_ids = self.florence_model.generate(

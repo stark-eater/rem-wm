@@ -71,7 +71,7 @@ def process_images_florence_lama(image, model_choice):
     image_cv = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
     
     # Run Florence to get mask
-    text_input = 'watermark'
+    text_input = 'watermark, signature'
     task_prompt = '<REGION_TO_SEGMENTATION>'
     image_pil = Image.fromarray(image_cv)  # Convert array to PIL Image
     inputs = florence_processor(text=task_prompt + text_input, images=image_pil, return_tensors="pt").to("cuda")
